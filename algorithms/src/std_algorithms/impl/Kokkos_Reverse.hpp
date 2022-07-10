@@ -79,6 +79,7 @@ struct StdReverseFunctor {
 #endif
   }
 
+  KOKKOS_FUNCTION
   StdReverseFunctor(InputIterator first, InputIterator last)
       : m_first(std::move(first)), m_last(std::move(last)) {}
 };
