@@ -54,32 +54,26 @@ namespace Experimental {
 
 // overload set1, accepting execution space
 template <class ExecutionSpace, class IteratorType>
-std::enable_if_t<
-  !::Kokkos::is_view<IteratorType>::value
-  && ::Kokkos::is_execution_space<ExecutionSpace>::value,
-  IteratorType
-  >
-unique(const ExecutionSpace& ex, IteratorType first, IteratorType last)
-{
+std::enable_if_t<!::Kokkos::is_view<IteratorType>::value &&
+                     ::Kokkos::is_execution_space<ExecutionSpace>::value,
+                 IteratorType>
+unique(const ExecutionSpace& ex, IteratorType first, IteratorType last) {
   return Impl::unique_impl("Kokkos::unique_iterator_api_default", ex, first,
                            last);
 }
 
 template <class ExecutionSpace, class IteratorType>
-std::enable_if_t<
-  !::Kokkos::is_view<IteratorType>::value
-  && ::Kokkos::is_execution_space<ExecutionSpace>::value, IteratorType
-  >
-unique(
-    const std::string& label, const ExecutionSpace& ex, IteratorType first,
-    IteratorType last) {
+std::enable_if_t<!::Kokkos::is_view<IteratorType>::value &&
+                     ::Kokkos::is_execution_space<ExecutionSpace>::value,
+                 IteratorType>
+unique(const std::string& label, const ExecutionSpace& ex, IteratorType first,
+       IteratorType last) {
   return Impl::unique_impl(label, ex, first, last);
 }
 
-template <
-  class ExecutionSpace, class DataType, class... Properties,
-  std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value, int> = 0
-  >
+template <class ExecutionSpace, class DataType, class... Properties,
+          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
+                            int> = 0>
 auto unique(const ExecutionSpace& ex,
             const ::Kokkos::View<DataType, Properties...>& view) {
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(view);
@@ -87,10 +81,9 @@ auto unique(const ExecutionSpace& ex,
                                         begin(view), end(view));
 }
 
-template <
-  class ExecutionSpace, class DataType, class... Properties,
-  std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value, int> = 0
-  >
+template <class ExecutionSpace, class DataType, class... Properties,
+          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
+                            int> = 0>
 auto unique(const std::string& label, const ExecutionSpace& ex,
             const ::Kokkos::View<DataType, Properties...>& view) {
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(view);
@@ -99,26 +92,26 @@ auto unique(const std::string& label, const ExecutionSpace& ex,
 
 // overload set2, accepting execution space
 template <class ExecutionSpace, class IteratorType, class BinaryPredicate>
-std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value, IteratorType>
-unique(const ExecutionSpace& ex, IteratorType first,
-                    IteratorType last, BinaryPredicate pred) {
+std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
+                  IteratorType>
+unique(const ExecutionSpace& ex, IteratorType first, IteratorType last,
+       BinaryPredicate pred) {
   return Impl::unique_impl("Kokkos::unique_iterator_api_default", ex, first,
                            last, pred);
 }
 
 template <class ExecutionSpace, class IteratorType, class BinaryPredicate>
-std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value, IteratorType>
-unique(const std::string& label, const ExecutionSpace& ex,
-                    IteratorType first, IteratorType last,
-                    BinaryPredicate pred) {
+std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
+                  IteratorType>
+unique(const std::string& label, const ExecutionSpace& ex, IteratorType first,
+       IteratorType last, BinaryPredicate pred) {
   return Impl::unique_impl(label, ex, first, last, pred);
 }
 
-template <
-  class ExecutionSpace, class DataType, class... Properties,
-  class BinaryPredicate,
-  std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value, int> = 0
-  >
+template <class ExecutionSpace, class DataType, class... Properties,
+          class BinaryPredicate,
+          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
+                            int> = 0>
 auto unique(const ExecutionSpace& ex,
             const ::Kokkos::View<DataType, Properties...>& view,
             BinaryPredicate pred) {
@@ -127,11 +120,10 @@ auto unique(const ExecutionSpace& ex,
                            end(view), std::move(pred));
 }
 
-template <
-  class ExecutionSpace, class DataType, class... Properties,
-  class BinaryPredicate,
-  std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value, int> = 0
-  >
+template <class ExecutionSpace, class DataType, class... Properties,
+          class BinaryPredicate,
+          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
+                            int> = 0>
 auto unique(const std::string& label, const ExecutionSpace& ex,
             const ::Kokkos::View<DataType, Properties...>& view,
             BinaryPredicate pred) {
@@ -151,27 +143,21 @@ auto unique(const std::string& label, const ExecutionSpace& ex,
 //
 template <class TeamHandleType, class IteratorType>
 KOKKOS_FUNCTION
-std::enable_if_t<
-  !::Kokkos::is_view<IteratorType>::value
-  && Impl::is_team_handle<TeamHandleType>::value,
-  IteratorType
-  >
-unique(const TeamHandleType& /*teamHandle*/,
-       IteratorType first,
-       IteratorType /*last*/)
-{
+    std::enable_if_t<!::Kokkos::is_view<IteratorType>::value &&
+                         Impl::is_team_handle<TeamHandleType>::value,
+                     IteratorType>
+    unique(const TeamHandleType& /*teamHandle*/, IteratorType first,
+           IteratorType /*last*/) {
   ::Kokkos::abort("team-level unique is not currently supported");
   return first;
 }
 
 template <
-  class TeamHandleType, class DataType, class... Properties,
-  std::enable_if_t< Impl::is_team_handle<TeamHandleType>::value, int> = 0
-  >
-KOKKOS_FUNCTION
-auto unique(const TeamHandleType& /*teamHandle*/,
-            const ::Kokkos::View<DataType, Properties...>& view)
-{
+    class TeamHandleType, class DataType, class... Properties,
+    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, int> = 0>
+KOKKOS_FUNCTION auto unique(
+    const TeamHandleType& /*teamHandle*/,
+    const ::Kokkos::View<DataType, Properties...>& view) {
   ::Kokkos::abort("team-level unique is not currently supported");
   namespace KE = ::Kokkos::Experimental;
   return KE::begin(view);
@@ -180,26 +166,20 @@ auto unique(const TeamHandleType& /*teamHandle*/,
 // overload set2
 template <class TeamHandleType, class IteratorType, class BinaryPredicate>
 KOKKOS_FUNCTION
-std::enable_if_t< Impl::is_team_handle<TeamHandleType>::value, IteratorType>
-unique(const TeamHandleType& /*teamHandle*/,
-       IteratorType first,
-       IteratorType /*last*/,
-       BinaryPredicate /*pred*/)
-{
+    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, IteratorType>
+    unique(const TeamHandleType& /*teamHandle*/, IteratorType first,
+           IteratorType /*last*/, BinaryPredicate /*pred*/) {
   ::Kokkos::abort("team-level unique is not currently supported");
   return first;
 }
 
 template <
-  class TeamHandleType, class DataType, class... Properties,
-  class BinaryPredicate,
-  std::enable_if_t< Impl::is_team_handle<TeamHandleType>::value, int> = 0
-  >
-KOKKOS_FUNCTION
-auto unique(const TeamHandleType& /*teamHandle*/,
-            const ::Kokkos::View<DataType, Properties...>& view,
-            BinaryPredicate /*pred*/)
-{
+    class TeamHandleType, class DataType, class... Properties,
+    class BinaryPredicate,
+    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, int> = 0>
+KOKKOS_FUNCTION auto unique(const TeamHandleType& /*teamHandle*/,
+                            const ::Kokkos::View<DataType, Properties...>& view,
+                            BinaryPredicate /*pred*/) {
   ::Kokkos::abort("team-level unique is not currently supported");
   namespace KE = ::Kokkos::Experimental;
   return KE::begin(view);
