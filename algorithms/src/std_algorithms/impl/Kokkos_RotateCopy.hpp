@@ -73,6 +73,7 @@ struct StdRotateCopyFunctor {
     }
   }
 
+  KOKKOS_FUNCTION
   StdRotateCopyFunctor(InputIterator first, InputIterator last,
                        InputIterator first_n, OutputIterator dest_first)
       : m_first(std::move(first)),
