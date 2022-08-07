@@ -59,16 +59,15 @@ template <class ExecutionSpace, class Iterator, class ValueType>
 std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value> replace(
     const ExecutionSpace& ex, Iterator first, Iterator last,
     const ValueType& old_value, const ValueType& new_value) {
-  Impl::replace_exespace_impl("Kokkos::replace_iterator_api", ex, first,
-                                     last, old_value, new_value);
+  Impl::replace_exespace_impl("Kokkos::replace_iterator_api", ex, first, last,
+                              old_value, new_value);
 }
 
 template <class ExecutionSpace, class Iterator, class ValueType>
 std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value> replace(
     const std::string& label, const ExecutionSpace& ex, Iterator first,
     Iterator last, const ValueType& old_value, const ValueType& new_value) {
-  Impl::replace_exespace_impl(label, ex, first, last, old_value,
-                                     new_value);
+  Impl::replace_exespace_impl(label, ex, first, last, old_value, new_value);
 }
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
@@ -79,9 +78,8 @@ std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value> replace(
     const ValueType& old_value, const ValueType& new_value) {
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(view);
   namespace KE = ::Kokkos::Experimental;
-  Impl::replace_exespace_impl("Kokkos::replace_view_api", ex,
-                                     KE::begin(view), KE::end(view), old_value,
-                                     new_value);
+  Impl::replace_exespace_impl("Kokkos::replace_view_api", ex, KE::begin(view),
+                              KE::end(view), old_value, new_value);
 }
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
@@ -93,7 +91,7 @@ std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value> replace(
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(view);
   namespace KE = ::Kokkos::Experimental;
   Impl::replace_exespace_impl(label, ex, KE::begin(view), KE::end(view),
-                                     old_value, new_value);
+                              old_value, new_value);
 }
 
 //
@@ -116,8 +114,8 @@ replace(const TeamHandleType& teamHandle,
         const ValueType& old_value, const ValueType& new_value) {
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(view);
   namespace KE = ::Kokkos::Experimental;
-  Impl::replace_team_impl(teamHandle, KE::begin(view), KE::end(view),
-                                 old_value, new_value);
+  Impl::replace_team_impl(teamHandle, KE::begin(view), KE::end(view), old_value,
+                          new_value);
 }
 
 }  // namespace Experimental
