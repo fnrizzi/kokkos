@@ -61,8 +61,8 @@ std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
                   OutputIterator>
 copy_if(const ExecutionSpace& ex, InputIterator first, InputIterator last,
         OutputIterator d_first, Predicate pred) {
-  return Impl::copy_if_impl("Kokkos::copy_if_iterator_api_default", ex, first,
-                            last, d_first, std::move(pred));
+  return Impl::copy_if_exespace_impl("Kokkos::copy_if_iterator_api_default", ex,
+                                     first, last, d_first, std::move(pred));
 }
 
 template <class ExecutionSpace, class InputIterator, class OutputIterator,
@@ -71,7 +71,8 @@ std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
                   OutputIterator>
 copy_if(const std::string& label, const ExecutionSpace& ex, InputIterator first,
         InputIterator last, OutputIterator d_first, Predicate pred) {
-  return Impl::copy_if_impl(label, ex, first, last, d_first, std::move(pred));
+  return Impl::copy_if_exespace_impl(label, ex, first, last, d_first,
+                                     std::move(pred));
 }
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
@@ -84,9 +85,9 @@ auto copy_if(const ExecutionSpace& ex,
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(source);
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(dest);
 
-  return Impl::copy_if_impl("Kokkos::copy_if_view_api_default", ex,
-                            cbegin(source), cend(source), begin(dest),
-                            std::move(pred));
+  return Impl::copy_if_exespace_impl("Kokkos::copy_if_view_api_default", ex,
+                                     cbegin(source), cend(source), begin(dest),
+                                     std::move(pred));
 }
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
@@ -99,8 +100,8 @@ auto copy_if(const std::string& label, const ExecutionSpace& ex,
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(source);
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(dest);
 
-  return Impl::copy_if_impl(label, ex, cbegin(source), cend(source),
-                            begin(dest), std::move(pred));
+  return Impl::copy_if_exespace_impl(label, ex, cbegin(source), cend(source),
+                                     begin(dest), std::move(pred));
 }
 
 //
