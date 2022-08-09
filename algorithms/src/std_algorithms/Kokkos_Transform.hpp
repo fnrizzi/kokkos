@@ -63,8 +63,9 @@ std::enable_if_t<
     OutputIterator>
 transform(const ExecutionSpace& ex, InputIterator first1, InputIterator last1,
           OutputIterator d_first, UnaryOperation unary_op) {
-  return Impl::transform_impl("Kokkos::transform_iterator_api_default", ex,
-                              first1, last1, d_first, std::move(unary_op));
+  return Impl::transform_exespace_impl("Kokkos::transform_iterator_api_default",
+                                       ex, first1, last1, d_first,
+                                       std::move(unary_op));
 }
 
 template <class ExecutionSpace, class InputIterator, class OutputIterator,
@@ -76,8 +77,8 @@ std::enable_if_t<
 transform(const std::string& label, const ExecutionSpace& ex,
           InputIterator first1, InputIterator last1, OutputIterator d_first,
           UnaryOperation unary_op) {
-  return Impl::transform_impl(label, ex, first1, last1, d_first,
-                              std::move(unary_op));
+  return Impl::transform_exespace_impl(label, ex, first1, last1, d_first,
+                                       std::move(unary_op));
 }
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
@@ -91,9 +92,9 @@ auto transform(const ExecutionSpace& ex,
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(source);
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(dest);
 
-  return Impl::transform_impl("Kokkos::transform_view_api_default", ex,
-                              begin(source), end(source), begin(dest),
-                              std::move(unary_op));
+  return Impl::transform_exespace_impl("Kokkos::transform_view_api_default", ex,
+                                       begin(source), end(source), begin(dest),
+                                       std::move(unary_op));
 }
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
@@ -107,8 +108,8 @@ auto transform(const std::string& label, const ExecutionSpace& ex,
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(source);
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(dest);
 
-  return Impl::transform_impl(label, ex, begin(source), end(source),
-                              begin(dest), std::move(unary_op));
+  return Impl::transform_exespace_impl(label, ex, begin(source), end(source),
+                                       begin(dest), std::move(unary_op));
 }
 
 template <class ExecutionSpace, class InputIterator1, class InputIterator2,
@@ -121,9 +122,9 @@ std::enable_if_t<
 transform(const ExecutionSpace& ex, InputIterator1 first1, InputIterator1 last1,
           InputIterator2 first2, OutputIterator d_first,
           BinaryOperation binary_op) {
-  return Impl::transform_impl("Kokkos::transform_iterator_api_default", ex,
-                              first1, last1, first2, d_first,
-                              std::move(binary_op));
+  return Impl::transform_exespace_impl("Kokkos::transform_iterator_api_default",
+                                       ex, first1, last1, first2, d_first,
+                                       std::move(binary_op));
 }
 
 template <class ExecutionSpace, class InputIterator1, class InputIterator2,
@@ -136,8 +137,8 @@ std::enable_if_t<
 transform(const std::string& label, const ExecutionSpace& ex,
           InputIterator1 first1, InputIterator1 last1, InputIterator2 first2,
           OutputIterator d_first, BinaryOperation binary_op) {
-  return Impl::transform_impl(label, ex, first1, last1, first2, d_first,
-                              std::move(binary_op));
+  return Impl::transform_exespace_impl(label, ex, first1, last1, first2,
+                                       d_first, std::move(binary_op));
 }
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
@@ -154,9 +155,9 @@ auto transform(const ExecutionSpace& ex,
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(source2);
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(dest);
 
-  return Impl::transform_impl("Kokkos::transform_view_api_default", ex,
-                              begin(source1), end(source1), begin(source2),
-                              begin(dest), std::move(binary_op));
+  return Impl::transform_exespace_impl(
+      "Kokkos::transform_view_api_default", ex, begin(source1), end(source1),
+      begin(source2), begin(dest), std::move(binary_op));
 }
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
@@ -173,9 +174,9 @@ auto transform(const std::string& label, const ExecutionSpace& ex,
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(source2);
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(dest);
 
-  return Impl::transform_impl(label, ex, begin(source1), end(source1),
-                              begin(source2), begin(dest),
-                              std::move(binary_op));
+  return Impl::transform_exespace_impl(label, ex, begin(source1), end(source1),
+                                       begin(source2), begin(dest),
+                                       std::move(binary_op));
 }
 
 //
