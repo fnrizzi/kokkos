@@ -257,7 +257,7 @@ KOKKOS_FUNCTION OutputIteratorType inclusive_scan_default_op_team_impl(
   using value_type =
       std::remove_const_t<typename InputIteratorType::value_type>;
 
-#if defined(KOKKOS_ENABLE_CUDA)
+  // #if defined(KOKKOS_ENABLE_CUDA)
 
   using exe_space  = typename TeamHandleType::execution_space;
   using index_type = typename InputIteratorType::difference_type;
@@ -280,13 +280,14 @@ KOKKOS_FUNCTION OutputIteratorType inclusive_scan_default_op_team_impl(
   // return
   return first_dest + num_elements;
 
-#else
+  // #else
 
-  return inclusive_scan_custom_binary_op_team_impl(
-      teamHandle, first_from, last_from, first_dest,
-      [](const value_type& lhs, const value_type& rhs) { return lhs + rhs; });
+  //   return inclusive_scan_custom_binary_op_team_impl(
+  //       teamHandle, first_from, last_from, first_dest,
+  //       [](const value_type& lhs, const value_type& rhs) { return lhs + rhs;
+  //       });
 
-#endif
+  // #endif
 }
 
 // -------------------------------------------------------------
@@ -313,7 +314,7 @@ KOKKOS_FUNCTION OutputIteratorType inclusive_scan_custom_binary_op_team_impl(
       "At the moment inclusive_scan doesn't support types without reduction "
       "identity");
 
-#if defined(KOKKOS_ENABLE_CUDA)
+  // #if defined(KOKKOS_ENABLE_CUDA)
 
   // aliases
   using exe_space     = typename TeamHandleType::execution_space;
@@ -333,27 +334,27 @@ KOKKOS_FUNCTION OutputIteratorType inclusive_scan_custom_binary_op_team_impl(
 
   return first_dest + num_elements;
 
-#else
+  // #else
 
-  std::size_t count = 0;
-  if (teamHandle.team_rank() == 0 && first_from != last_from) {
-    auto new_dest   = first_dest;
-    const auto init = *first_from;
-    *new_dest++     = init;
-    ++first_from;
+  //   std::size_t count = 0;
+  //   if (teamHandle.team_rank() == 0 && first_from != last_from) {
+  //     auto new_dest   = first_dest;
+  //     const auto init = *first_from;
+  //     *new_dest++     = init;
+  //     ++first_from;
 
-    if (first_from != last_from) {
-      new_dest = inclusive_scan_custom_binary_op_team_impl(
-          teamHandle, first_from, last_from, new_dest, binary_op, init);
-    }
+  //     if (first_from != last_from) {
+  //       new_dest = inclusive_scan_custom_binary_op_team_impl(
+  //           teamHandle, first_from, last_from, new_dest, binary_op, init);
+  //     }
 
-    count = Kokkos::Experimental::distance(first_dest, new_dest);
-  }
+  //     count = Kokkos::Experimental::distance(first_dest, new_dest);
+  //   }
 
-  teamHandle.team_broadcast(count, 0);
-  return first_dest + count;
+  //   teamHandle.team_broadcast(count, 0);
+  //   return first_dest + count;
 
-#endif
+  // #endif
 }
 
 // -------------------------------------------------------------
@@ -377,7 +378,7 @@ KOKKOS_FUNCTION OutputIteratorType inclusive_scan_custom_binary_op_team_impl(
       "At the moment inclusive_scan doesn't support types without reduction "
       "identity");
 
-#if defined(KOKKOS_ENABLE_CUDA)
+  // #if defined(KOKKOS_ENABLE_CUDA)
 
   // aliases
   using exe_space     = typename TeamHandleType::execution_space;
@@ -397,20 +398,20 @@ KOKKOS_FUNCTION OutputIteratorType inclusive_scan_custom_binary_op_team_impl(
   // return
   return first_dest + num_elements;
 
-#else
+  // #else
 
-  std::size_t count = 0;
-  if (teamHandle.team_rank() == 0) {
-    for (; first_from != last_from; ++first_from) {
-      init_value          = binary_op(init_value, *first_from);
-      first_dest[count++] = init_value;
-    }
-  }
+  //   std::size_t count = 0;
+  //   if (teamHandle.team_rank() == 0) {
+  //     for (; first_from != last_from; ++first_from) {
+  //       init_value          = binary_op(init_value, *first_from);
+  //       first_dest[count++] = init_value;
+  //     }
+  //   }
 
-  teamHandle.team_broadcast(count, 0);
-  return first_dest + count;
+  //   teamHandle.team_broadcast(count, 0);
+  //   return first_dest + count;
 
-#endif
+  // #endif
 }
 
 }  // namespace Impl
