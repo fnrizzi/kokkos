@@ -56,8 +56,8 @@ namespace Experimental {
 // overload set accepting execution space
 //
 template <class ExecutionSpace, class IteratorType,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto minmax_element(const ExecutionSpace& ex, IteratorType first,
                     IteratorType last) {
   return Impl::minmax_element_exespace_impl<MinMaxFirstLastLoc>(
@@ -65,8 +65,8 @@ auto minmax_element(const ExecutionSpace& ex, IteratorType first,
 }
 
 template <class ExecutionSpace, class IteratorType,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto minmax_element(const std::string& label, const ExecutionSpace& ex,
                     IteratorType first, IteratorType last) {
   return Impl::minmax_element_exespace_impl<MinMaxFirstLastLoc>(label, ex,
@@ -74,8 +74,8 @@ auto minmax_element(const std::string& label, const ExecutionSpace& ex,
 }
 
 template <class ExecutionSpace, class IteratorType, class ComparatorType,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto minmax_element(const ExecutionSpace& ex, IteratorType first,
                     IteratorType last, ComparatorType comp) {
   Impl::static_assert_is_not_openmptarget(ex);
@@ -86,8 +86,8 @@ auto minmax_element(const ExecutionSpace& ex, IteratorType first,
 }
 
 template <class ExecutionSpace, class IteratorType, class ComparatorType,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto minmax_element(const std::string& label, const ExecutionSpace& ex,
                     IteratorType first, IteratorType last,
                     ComparatorType comp) {
@@ -98,8 +98,8 @@ auto minmax_element(const std::string& label, const ExecutionSpace& ex,
 }
 
 template <class ExecutionSpace, class DataType, class... Properties,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto minmax_element(const ExecutionSpace& ex,
                     const ::Kokkos::View<DataType, Properties...>& v) {
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(v);
@@ -109,8 +109,8 @@ auto minmax_element(const ExecutionSpace& ex,
 }
 
 template <class ExecutionSpace, class DataType, class... Properties,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto minmax_element(const std::string& label, const ExecutionSpace& ex,
                     const ::Kokkos::View<DataType, Properties...>& v) {
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(v);
@@ -121,8 +121,8 @@ auto minmax_element(const std::string& label, const ExecutionSpace& ex,
 
 template <class ExecutionSpace, class DataType, class ComparatorType,
           class... Properties,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto minmax_element(const ExecutionSpace& ex,
                     const ::Kokkos::View<DataType, Properties...>& v,
                     ComparatorType comp) {
@@ -136,8 +136,8 @@ auto minmax_element(const ExecutionSpace& ex,
 
 template <class ExecutionSpace, class DataType, class ComparatorType,
           class... Properties,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto minmax_element(const std::string& label, const ExecutionSpace& ex,
                     const ::Kokkos::View<DataType, Properties...>& v,
                     ComparatorType comp) {
@@ -155,7 +155,7 @@ auto minmax_element(const std::string& label, const ExecutionSpace& ex,
 //
 template <
     class TeamHandleType, class IteratorType,
-    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, int> = 0>
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value, int> = 0>
 KOKKOS_FUNCTION auto minmax_element(const TeamHandleType& teamHandle,
                                     IteratorType first, IteratorType last) {
   return Impl::minmax_element_team_impl<MinMaxFirstLastLoc>(teamHandle, first,
@@ -164,7 +164,7 @@ KOKKOS_FUNCTION auto minmax_element(const TeamHandleType& teamHandle,
 
 template <
     class TeamHandleType, class IteratorType, class ComparatorType,
-    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, int> = 0>
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value, int> = 0>
 KOKKOS_FUNCTION auto minmax_element(const TeamHandleType& teamHandle,
                                     IteratorType first, IteratorType last,
                                     ComparatorType comp) {
@@ -176,7 +176,7 @@ KOKKOS_FUNCTION auto minmax_element(const TeamHandleType& teamHandle,
 
 template <
     class TeamHandleType, class DataType, class... Properties,
-    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, int> = 0>
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value, int> = 0>
 KOKKOS_FUNCTION auto minmax_element(
     const TeamHandleType& teamHandle,
     const ::Kokkos::View<DataType, Properties...>& v) {
@@ -189,7 +189,7 @@ KOKKOS_FUNCTION auto minmax_element(
 template <
     class TeamHandleType, class DataType, class ComparatorType,
     class... Properties,
-    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, int> = 0>
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value, int> = 0>
 KOKKOS_FUNCTION auto minmax_element(
     const TeamHandleType& teamHandle,
     const ::Kokkos::View<DataType, Properties...>& v, ComparatorType comp) {

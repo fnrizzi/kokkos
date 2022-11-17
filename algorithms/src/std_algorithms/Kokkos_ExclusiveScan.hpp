@@ -212,7 +212,7 @@ template <class TeamHandleType, class InputIteratorType,
 KOKKOS_FUNCTION
     std::enable_if_t<::Kokkos::Experimental::Impl::are_iterators<
                          InputIteratorType, OutputIteratorType>::value &&
-                         Impl::is_team_handle<TeamHandleType>::value,
+                         Kokkos::is_team_handle<TeamHandleType>::value,
                      OutputIteratorType>
     exclusive_scan(const TeamHandleType& teamHandle, InputIteratorType first,
                    InputIteratorType last, OutputIteratorType first_dest,
@@ -226,7 +226,7 @@ KOKKOS_FUNCTION
 template <
     class TeamHandleType, class DataType1, class... Properties1,
     class DataType2, class... Properties2, class ValueType,
-    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, int> = 0>
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value, int> = 0>
 KOKKOS_FUNCTION auto exclusive_scan(
     const TeamHandleType& teamHandle,
     const ::Kokkos::View<DataType1, Properties1...>& view_from,
@@ -248,7 +248,7 @@ template <class TeamHandleType, class InputIteratorType,
 KOKKOS_FUNCTION
     std::enable_if_t<::Kokkos::Experimental::Impl::are_iterators<
                          InputIteratorType, OutputIteratorType>::value &&
-                         Impl::is_team_handle<TeamHandleType>::value,
+                         Kokkos::is_team_handle<TeamHandleType>::value,
                      OutputIteratorType>
     exclusive_scan(const TeamHandleType& teamHandle, InputIteratorType first,
                    InputIteratorType last, OutputIteratorType first_dest,
@@ -263,7 +263,7 @@ KOKKOS_FUNCTION
 template <
     class TeamHandleType, class DataType1, class... Properties1,
     class DataType2, class... Properties2, class ValueType, class BinaryOpType,
-    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, int> = 0>
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value, int> = 0>
 KOKKOS_FUNCTION auto exclusive_scan(
     const TeamHandleType& teamHandle,
     const ::Kokkos::View<DataType1, Properties1...>& view_from,

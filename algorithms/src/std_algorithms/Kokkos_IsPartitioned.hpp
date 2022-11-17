@@ -56,7 +56,7 @@ namespace Experimental {
 // overload set accepting execution space
 //
 template <class ExecutionSpace, class IteratorType, class PredicateType>
-std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value, bool>
+std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value, bool>
 is_partitioned(const ExecutionSpace& ex, IteratorType first, IteratorType last,
                PredicateType p) {
   return Impl::is_partitioned_exespace_impl(
@@ -65,7 +65,7 @@ is_partitioned(const ExecutionSpace& ex, IteratorType first, IteratorType last,
 }
 
 template <class ExecutionSpace, class IteratorType, class PredicateType>
-std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value, bool>
+std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value, bool>
 is_partitioned(const std::string& label, const ExecutionSpace& ex,
                IteratorType first, IteratorType last, PredicateType p) {
   return Impl::is_partitioned_exespace_impl(label, ex, first, last,
@@ -74,7 +74,7 @@ is_partitioned(const std::string& label, const ExecutionSpace& ex,
 
 template <class ExecutionSpace, class PredicateType, class DataType,
           class... Properties>
-std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value, bool>
+std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value, bool>
 is_partitioned(const ExecutionSpace& ex,
                const ::Kokkos::View<DataType, Properties...>& v,
                PredicateType p) {
@@ -87,7 +87,7 @@ is_partitioned(const ExecutionSpace& ex,
 
 template <class ExecutionSpace, class PredicateType, class DataType,
           class... Properties>
-std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value, bool>
+std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value, bool>
 is_partitioned(const std::string& label, const ExecutionSpace& ex,
                const ::Kokkos::View<DataType, Properties...>& v,
                PredicateType p) {
@@ -104,7 +104,7 @@ is_partitioned(const std::string& label, const ExecutionSpace& ex,
 //
 template <class TeamHandleType, class IteratorType, class PredicateType>
 KOKKOS_FUNCTION
-    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, bool>
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value, bool>
     is_partitioned(const TeamHandleType& teamHandle, IteratorType first,
                    IteratorType last, PredicateType p) {
   return Impl::is_partitioned_team_impl(teamHandle, first, last, std::move(p));
@@ -113,7 +113,7 @@ KOKKOS_FUNCTION
 template <class TeamHandleType, class PredicateType, class DataType,
           class... Properties>
 KOKKOS_FUNCTION
-    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, bool>
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value, bool>
     is_partitioned(const TeamHandleType& teamHandle,
                    const ::Kokkos::View<DataType, Properties...>& v,
                    PredicateType p) {

@@ -56,7 +56,7 @@ namespace Experimental {
 // overload set accepting execution space
 //
 template <class ExecutionSpace, class IteratorType, class Generator>
-std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value> generate(
+std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value> generate(
     const ExecutionSpace& ex, IteratorType first, IteratorType last,
     Generator g) {
   Impl::generate_exespace_impl("Kokkos::generate_iterator_api_default", ex,
@@ -64,7 +64,7 @@ std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value> generate(
 }
 
 template <class ExecutionSpace, class IteratorType, class Generator>
-std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value> generate(
+std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value> generate(
     const std::string& label, const ExecutionSpace& ex, IteratorType first,
     IteratorType last, Generator g) {
   Impl::generate_exespace_impl(label, ex, first, last, std::move(g));
@@ -72,7 +72,7 @@ std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value> generate(
 
 template <class ExecutionSpace, class DataType, class... Properties,
           class Generator>
-std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value> generate(
+std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value> generate(
     const ExecutionSpace& ex,
     const ::Kokkos::View<DataType, Properties...>& view, Generator g) {
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(view);
@@ -83,7 +83,7 @@ std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value> generate(
 
 template <class ExecutionSpace, class DataType, class... Properties,
           class Generator>
-std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value> generate(
+std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value> generate(
     const std::string& label, const ExecutionSpace& ex,
     const ::Kokkos::View<DataType, Properties...>& view, Generator g) {
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(view);
@@ -97,17 +97,19 @@ std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value> generate(
 // since they cause issues on device because of the string allocation.
 //
 template <class TeamHandleType, class IteratorType, class Generator>
-KOKKOS_FUNCTION std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value>
-generate(const TeamHandleType& teamHandle, IteratorType first,
-         IteratorType last, Generator g) {
+KOKKOS_FUNCTION
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value>
+    generate(const TeamHandleType& teamHandle, IteratorType first,
+             IteratorType last, Generator g) {
   Impl::generate_team_impl(teamHandle, first, last, std::move(g));
 }
 
 template <class TeamHandleType, class DataType, class... Properties,
           class Generator>
-KOKKOS_FUNCTION std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value>
-generate(const TeamHandleType& teamHandle,
-         const ::Kokkos::View<DataType, Properties...>& view, Generator g) {
+KOKKOS_FUNCTION
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value>
+    generate(const TeamHandleType& teamHandle,
+             const ::Kokkos::View<DataType, Properties...>& view, Generator g) {
   Impl::static_assert_is_admissible_to_kokkos_std_algorithms(view);
   Impl::generate_team_impl(teamHandle, begin(view), end(view), std::move(g));
 }

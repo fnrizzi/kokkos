@@ -83,8 +83,8 @@ transform(const std::string& label, const ExecutionSpace& ex,
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
           class DataType2, class... Properties2, class UnaryOperation,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto transform(const ExecutionSpace& ex,
                const ::Kokkos::View<DataType1, Properties1...>& source,
                ::Kokkos::View<DataType2, Properties2...>& dest,
@@ -99,8 +99,8 @@ auto transform(const ExecutionSpace& ex,
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
           class DataType2, class... Properties2, class UnaryOperation,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto transform(const std::string& label, const ExecutionSpace& ex,
                const ::Kokkos::View<DataType1, Properties1...>& source,
                ::Kokkos::View<DataType2, Properties2...>& dest,
@@ -114,11 +114,10 @@ auto transform(const std::string& label, const ExecutionSpace& ex,
 
 template <class ExecutionSpace, class InputIterator1, class InputIterator2,
           class OutputIterator, class BinaryOperation>
-std::enable_if_t<
-    ::Kokkos::Experimental::Impl::are_iterators<InputIterator1, InputIterator2,
-                                                OutputIterator>::value&& ::
-        Kokkos::is_execution_space<ExecutionSpace>::value,
-    OutputIterator>
+std::enable_if_t<::Kokkos::Experimental::Impl::are_iterators<
+                     InputIterator1, InputIterator2, OutputIterator>::value&& ::
+                     Kokkos::is_execution_space<ExecutionSpace>::value,
+                 OutputIterator>
 transform(const ExecutionSpace& ex, InputIterator1 first1, InputIterator1 last1,
           InputIterator2 first2, OutputIterator d_first,
           BinaryOperation binary_op) {
@@ -129,11 +128,10 @@ transform(const ExecutionSpace& ex, InputIterator1 first1, InputIterator1 last1,
 
 template <class ExecutionSpace, class InputIterator1, class InputIterator2,
           class OutputIterator, class BinaryOperation>
-std::enable_if_t<
-    ::Kokkos::Experimental::Impl::are_iterators<InputIterator1, InputIterator2,
-                                                OutputIterator>::value&& ::
-        Kokkos::is_execution_space<ExecutionSpace>::value,
-    OutputIterator>
+std::enable_if_t<::Kokkos::Experimental::Impl::are_iterators<
+                     InputIterator1, InputIterator2, OutputIterator>::value&& ::
+                     Kokkos::is_execution_space<ExecutionSpace>::value,
+                 OutputIterator>
 transform(const std::string& label, const ExecutionSpace& ex,
           InputIterator1 first1, InputIterator1 last1, InputIterator2 first2,
           OutputIterator d_first, BinaryOperation binary_op) {
@@ -144,8 +142,8 @@ transform(const std::string& label, const ExecutionSpace& ex,
 template <class ExecutionSpace, class DataType1, class... Properties1,
           class DataType2, class... Properties2, class DataType3,
           class... Properties3, class BinaryOperation,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto transform(const ExecutionSpace& ex,
                const ::Kokkos::View<DataType1, Properties1...>& source1,
                const ::Kokkos::View<DataType2, Properties2...>& source2,
@@ -163,8 +161,8 @@ auto transform(const ExecutionSpace& ex,
 template <class ExecutionSpace, class DataType1, class... Properties1,
           class DataType2, class... Properties2, class DataType3,
           class... Properties3, class BinaryOperation,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto transform(const std::string& label, const ExecutionSpace& ex,
                const ::Kokkos::View<DataType1, Properties1...>& source1,
                const ::Kokkos::View<DataType2, Properties2...>& source2,
@@ -186,14 +184,13 @@ auto transform(const std::string& label, const ExecutionSpace& ex,
 //
 template <class TeamHandleType, class InputIterator, class OutputIterator,
           class UnaryOperation>
-KOKKOS_FUNCTION
-    std::enable_if_t< ::Kokkos::Experimental::Impl::are_iterators<
-                          InputIterator, OutputIterator>::value &&
-                          Impl::is_team_handle<TeamHandleType>::value,
-                      OutputIterator>
-    transform(const TeamHandleType& teamHandle, InputIterator first1,
-              InputIterator last1, OutputIterator d_first,
-              UnaryOperation unary_op) {
+KOKKOS_FUNCTION std::enable_if_t<
+    ::Kokkos::Experimental::Impl::are_iterators<InputIterator, OutputIterator>::
+        value&& ::Kokkos::is_team_handle<TeamHandleType>::value,
+    OutputIterator>
+transform(const TeamHandleType& teamHandle, InputIterator first1,
+          InputIterator last1, OutputIterator d_first,
+          UnaryOperation unary_op) {
   return Impl::transform_team_impl(teamHandle, first1, last1, d_first,
                                    std::move(unary_op));
 }
@@ -201,7 +198,7 @@ KOKKOS_FUNCTION
 template <
     class TeamHandleType, class DataType1, class... Properties1,
     class DataType2, class... Properties2, class UnaryOperation,
-    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, int> = 0>
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value, int> = 0>
 KOKKOS_FUNCTION auto transform(
     const TeamHandleType& teamHandle,
     const ::Kokkos::View<DataType1, Properties1...>& source,
@@ -217,8 +214,8 @@ template <class TeamHandleType, class InputIterator1, class InputIterator2,
           class OutputIterator, class BinaryOperation>
 KOKKOS_FUNCTION std::enable_if_t<
     ::Kokkos::Experimental::Impl::are_iterators<InputIterator1, InputIterator2,
-                                                OutputIterator>::value &&
-        Impl::is_team_handle<TeamHandleType>::value,
+                                                OutputIterator>::value&& ::
+        Kokkos::is_team_handle<TeamHandleType>::value,
     OutputIterator>
 transform(const TeamHandleType& teamHandle, InputIterator1 first1,
           InputIterator1 last1, InputIterator2 first2, OutputIterator d_first,
@@ -231,7 +228,7 @@ template <
     class TeamHandleType, class DataType1, class... Properties1,
     class DataType2, class... Properties2, class DataType3,
     class... Properties3, class BinaryOperation,
-    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, int> = 0>
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value, int> = 0>
 KOKKOS_FUNCTION auto transform(
     const TeamHandleType& teamHandle,
     const ::Kokkos::View<DataType1, Properties1...>& source1,

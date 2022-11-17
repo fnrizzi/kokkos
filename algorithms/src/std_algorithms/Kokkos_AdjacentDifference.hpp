@@ -117,8 +117,8 @@ adjacent_difference(const std::string& label, const ExecutionSpace& ex,
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
           class DataType2, class... Properties2,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto adjacent_difference(
     const ExecutionSpace& ex,
     const ::Kokkos::View<DataType1, Properties1...>& view_from,
@@ -141,8 +141,8 @@ auto adjacent_difference(
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
           class DataType2, class... Properties2, class BinaryOp,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto adjacent_difference(
     const ExecutionSpace& ex,
     const ::Kokkos::View<DataType1, Properties1...>& view_from,
@@ -158,8 +158,8 @@ auto adjacent_difference(
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
           class DataType2, class... Properties2,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto adjacent_difference(
     const std::string& label, const ExecutionSpace& ex,
     const ::Kokkos::View<DataType1, Properties1...>& view_from,
@@ -183,8 +183,8 @@ auto adjacent_difference(
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
           class DataType2, class... Properties2, class BinaryOp,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto adjacent_difference(
     const std::string& label, const ExecutionSpace& ex,
     const ::Kokkos::View<DataType1, Properties1...>& view_from,
@@ -207,7 +207,7 @@ template <class TeamHandleType, class InputIteratorType,
           class OutputIteratorType>
 KOKKOS_FUNCTION
     std::enable_if_t<!::Kokkos::is_view<InputIteratorType>::value &&
-                         Impl::is_team_handle<TeamHandleType>::value,
+                         ::Kokkos::is_team_handle<TeamHandleType>::value,
                      OutputIteratorType>
     adjacent_difference(const TeamHandleType& teamHandle,
                         InputIteratorType first_from,
@@ -226,7 +226,7 @@ template <class TeamHandleType, class InputIteratorType,
           class OutputIteratorType, class BinaryOp>
 KOKKOS_FUNCTION
     std::enable_if_t<!::Kokkos::is_view<InputIteratorType>::value &&
-                         Impl::is_team_handle<TeamHandleType>::value,
+                         ::Kokkos::is_team_handle<TeamHandleType>::value,
                      OutputIteratorType>
     adjacent_difference(const TeamHandleType& teamHandle,
                         InputIteratorType first_from,
@@ -239,7 +239,7 @@ KOKKOS_FUNCTION
 template <
     class TeamHandleType, class DataType1, class... Properties1,
     class DataType2, class... Properties2,
-    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, int> = 0>
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value, int> = 0>
 KOKKOS_FUNCTION auto adjacent_difference(
     const TeamHandleType& teamHandle,
     const ::Kokkos::View<DataType1, Properties1...>& view_from,
@@ -263,7 +263,7 @@ KOKKOS_FUNCTION auto adjacent_difference(
 template <
     class TeamHandleType, class DataType1, class... Properties1,
     class DataType2, class... Properties2, class BinaryOp,
-    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, int> = 0>
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value, int> = 0>
 KOKKOS_FUNCTION auto adjacent_difference(
     const TeamHandleType& teamHandle,
     const ::Kokkos::View<DataType1, Properties1...>& view_from,

@@ -102,7 +102,7 @@ equal(const std::string& label, const ExecutionSpace& ex, IteratorType1 first1,
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
           class DataType2, class... Properties2>
-std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value, bool>
+std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value, bool>
 equal(const ExecutionSpace& ex,
       const ::Kokkos::View<DataType1, Properties1...>& view1,
       ::Kokkos::View<DataType2, Properties2...>& view2) {
@@ -117,7 +117,7 @@ equal(const ExecutionSpace& ex,
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
           class DataType2, class... Properties2>
-std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value, bool>
+std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value, bool>
 equal(const std::string& label, const ExecutionSpace& ex,
       const ::Kokkos::View<DataType1, Properties1...>& view1,
       ::Kokkos::View<DataType2, Properties2...>& view2) {
@@ -131,7 +131,7 @@ equal(const std::string& label, const ExecutionSpace& ex,
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
           class DataType2, class... Properties2, class BinaryPredicateType>
-std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value, bool>
+std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value, bool>
 equal(const ExecutionSpace& ex,
       const ::Kokkos::View<DataType1, Properties1...>& view1,
       ::Kokkos::View<DataType2, Properties2...>& view2,
@@ -147,7 +147,7 @@ equal(const ExecutionSpace& ex,
 
 template <class ExecutionSpace, class DataType1, class... Properties1,
           class DataType2, class... Properties2, class BinaryPredicateType>
-std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value, bool>
+std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value, bool>
 equal(const std::string& label, const ExecutionSpace& ex,
       const ::Kokkos::View<DataType1, Properties1...>& view1,
       ::Kokkos::View<DataType2, Properties2...>& view2,
@@ -215,26 +215,24 @@ equal(const std::string& label, const ExecutionSpace& ex, IteratorType1 first1,
 // since they cause issues on device because of the string allocation.
 //
 template <class TeamHandleType, class IteratorType1, class IteratorType2>
-KOKKOS_FUNCTION
-    std::enable_if_t< ::Kokkos::Experimental::Impl::are_iterators<
-                          IteratorType1, IteratorType2>::value &&
-                          Impl::is_team_handle<TeamHandleType>::value,
-                      bool>
-    equal(const TeamHandleType& teamHandle, IteratorType1 first1,
-          IteratorType1 last1, IteratorType2 first2) {
+KOKKOS_FUNCTION std::enable_if_t<
+    ::Kokkos::Experimental::Impl::are_iterators<IteratorType1, IteratorType2>::
+        value&& ::Kokkos::is_team_handle<TeamHandleType>::value,
+    bool>
+equal(const TeamHandleType& teamHandle, IteratorType1 first1,
+      IteratorType1 last1, IteratorType2 first2) {
   return Impl::equal_team_impl(teamHandle, first1, last1, first2);
 }
 
 template <class TeamHandleType, class IteratorType1, class IteratorType2,
           class BinaryPredicateType>
-KOKKOS_FUNCTION
-    std::enable_if_t< ::Kokkos::Experimental::Impl::are_iterators<
-                          IteratorType1, IteratorType2>::value &&
-                          Impl::is_team_handle<TeamHandleType>::value,
-                      bool>
-    equal(const TeamHandleType& teamHandle, IteratorType1 first1,
-          IteratorType1 last1, IteratorType2 first2,
-          BinaryPredicateType predicate) {
+KOKKOS_FUNCTION std::enable_if_t<
+    ::Kokkos::Experimental::Impl::are_iterators<IteratorType1, IteratorType2>::
+        value&& ::Kokkos::is_team_handle<TeamHandleType>::value,
+    bool>
+equal(const TeamHandleType& teamHandle, IteratorType1 first1,
+      IteratorType1 last1, IteratorType2 first2,
+      BinaryPredicateType predicate) {
   return Impl::equal_team_impl(teamHandle, first1, last1, first2,
                                std::move(predicate));
 }
@@ -242,7 +240,7 @@ KOKKOS_FUNCTION
 template <class TeamHandleType, class DataType1, class... Properties1,
           class DataType2, class... Properties2>
 KOKKOS_FUNCTION
-    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, bool>
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value, bool>
     equal(const TeamHandleType& teamHandle,
           const ::Kokkos::View<DataType1, Properties1...>& view1,
           ::Kokkos::View<DataType2, Properties2...>& view2) {
@@ -257,7 +255,7 @@ KOKKOS_FUNCTION
 template <class TeamHandleType, class DataType1, class... Properties1,
           class DataType2, class... Properties2, class BinaryPredicateType>
 KOKKOS_FUNCTION
-    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, bool>
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value, bool>
     equal(const TeamHandleType& teamHandle,
           const ::Kokkos::View<DataType1, Properties1...>& view1,
           ::Kokkos::View<DataType2, Properties2...>& view2,
@@ -271,26 +269,24 @@ KOKKOS_FUNCTION
 }
 
 template <class TeamHandleType, class IteratorType1, class IteratorType2>
-KOKKOS_FUNCTION
-    std::enable_if_t< ::Kokkos::Experimental::Impl::are_iterators<
-                          IteratorType1, IteratorType2>::value &&
-                          Impl::is_team_handle<TeamHandleType>::value,
-                      bool>
-    equal(const TeamHandleType& teamHandle, IteratorType1 first1,
-          IteratorType1 last1, IteratorType2 first2, IteratorType2 last2) {
+KOKKOS_FUNCTION std::enable_if_t<
+    ::Kokkos::Experimental::Impl::are_iterators<IteratorType1, IteratorType2>::
+        value&& ::Kokkos::is_team_handle<TeamHandleType>::value,
+    bool>
+equal(const TeamHandleType& teamHandle, IteratorType1 first1,
+      IteratorType1 last1, IteratorType2 first2, IteratorType2 last2) {
   return Impl::equal_team_impl(teamHandle, first1, last1, first2, last2);
 }
 
 template <class TeamHandleType, class IteratorType1, class IteratorType2,
           class BinaryPredicateType>
-KOKKOS_FUNCTION
-    std::enable_if_t< ::Kokkos::Experimental::Impl::are_iterators<
-                          IteratorType1, IteratorType2>::value &&
-                          Impl::is_team_handle<TeamHandleType>::value,
-                      bool>
-    equal(const TeamHandleType& teamHandle, IteratorType1 first1,
-          IteratorType1 last1, IteratorType2 first2, IteratorType2 last2,
-          BinaryPredicateType predicate) {
+KOKKOS_FUNCTION std::enable_if_t<
+    ::Kokkos::Experimental::Impl::are_iterators<IteratorType1, IteratorType2>::
+        value&& ::Kokkos::is_team_handle<TeamHandleType>::value,
+    bool>
+equal(const TeamHandleType& teamHandle, IteratorType1 first1,
+      IteratorType1 last1, IteratorType2 first2, IteratorType2 last2,
+      BinaryPredicateType predicate) {
   return Impl::equal_team_impl(teamHandle, first1, last1, first2, last2,
                                std::move(predicate));
 }

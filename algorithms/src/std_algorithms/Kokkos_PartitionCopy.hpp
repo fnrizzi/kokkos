@@ -55,11 +55,11 @@ namespace Experimental {
 //
 // overload set accepting execution space
 //
-template <class ExecutionSpace, class InputIteratorType,
-          class OutputIteratorTrueType, class OutputIteratorFalseType,
-          class PredicateType,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+template <
+    class ExecutionSpace, class InputIteratorType, class OutputIteratorTrueType,
+    class OutputIteratorFalseType, class PredicateType,
+    std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value, int> =
+        0>
 ::Kokkos::pair<OutputIteratorTrueType, OutputIteratorFalseType> partition_copy(
     const ExecutionSpace& ex, InputIteratorType from_first,
     InputIteratorType from_last, OutputIteratorTrueType to_first_true,
@@ -69,11 +69,11 @@ template <class ExecutionSpace, class InputIteratorType,
       to_first_true, to_first_false, std::move(p));
 }
 
-template <class ExecutionSpace, class InputIteratorType,
-          class OutputIteratorTrueType, class OutputIteratorFalseType,
-          class PredicateType,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+template <
+    class ExecutionSpace, class InputIteratorType, class OutputIteratorTrueType,
+    class OutputIteratorFalseType, class PredicateType,
+    std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value, int> =
+        0>
 ::Kokkos::pair<OutputIteratorTrueType, OutputIteratorFalseType> partition_copy(
     const std::string& label, const ExecutionSpace& ex,
     InputIteratorType from_first, InputIteratorType from_last,
@@ -87,8 +87,8 @@ template <class ExecutionSpace, class InputIteratorType,
 template <class ExecutionSpace, class DataType1, class... Properties1,
           class DataType2, class... Properties2, class DataType3,
           class... Properties3, class PredicateType,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto partition_copy(
     const ExecutionSpace& ex,
     const ::Kokkos::View<DataType1, Properties1...>& view_from,
@@ -104,8 +104,8 @@ auto partition_copy(
 template <class ExecutionSpace, class DataType1, class... Properties1,
           class DataType2, class... Properties2, class DataType3,
           class... Properties3, class PredicateType,
-          std::enable_if_t< ::Kokkos::is_execution_space<ExecutionSpace>::value,
-                            int> = 0>
+          std::enable_if_t<::Kokkos::is_execution_space<ExecutionSpace>::value,
+                           int> = 0>
 auto partition_copy(
     const std::string& label, const ExecutionSpace& ex,
     const ::Kokkos::View<DataType1, Properties1...>& view_from,
@@ -125,7 +125,7 @@ auto partition_copy(
 template <
     class TeamHandleType, class InputIteratorType, class OutputIteratorTrueType,
     class OutputIteratorFalseType, class PredicateType,
-    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, int> = 0>
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value, int> = 0>
 KOKKOS_FUNCTION ::Kokkos::pair<OutputIteratorTrueType, OutputIteratorFalseType>
 partition_copy(const TeamHandleType& teamHandle, InputIteratorType from_first,
                InputIteratorType from_last,
@@ -140,7 +140,7 @@ template <
     class TeamHandleType, class DataType1, class... Properties1,
     class DataType2, class... Properties2, class DataType3,
     class... Properties3, class PredicateType,
-    std::enable_if_t<Impl::is_team_handle<TeamHandleType>::value, int> = 0>
+    std::enable_if_t<::Kokkos::is_team_handle<TeamHandleType>::value, int> = 0>
 KOKKOS_FUNCTION auto partition_copy(
     const TeamHandleType& teamHandle,
     const ::Kokkos::View<DataType1, Properties1...>& view_from,
